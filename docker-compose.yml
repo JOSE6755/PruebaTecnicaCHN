@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Prueba12345
+    ports:
+      - "1433:1433"
+    networks:
+      - app-network
+
+  springbootapp:
+    image: springbootapp:latest
+    build:
+      context: "./PruebaCHN"
+    container_name: springbootapp
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:sqlserver://sqlserver:1433;databaseName=master;encrypt=true;trustServerCertificate=true
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=Prueba12345
+    depends_on:
+      - sqlserver
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - springbootapp
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

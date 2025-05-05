@@ -47,10 +47,7 @@ yarn-error.log
 # Archivos de configuración de NetBeans
 nbproject/
 
-# Archivos específicos de Docker (si existen)
-.docker/
-Dockerfile*
-docker-compose.yml
+
 
 # Ignorar archivos locales de base de datos (por ejemplo, si usas H2 o SQLite)
 *.h2.db
