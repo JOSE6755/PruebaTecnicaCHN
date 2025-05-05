@@ -1,4 +1,3 @@
-// ListaPrestamos.jsx
 import React, { useState, useEffect } from "react";
 import {
   Container,
@@ -41,11 +40,11 @@ const ListaPrestamos = () => {
   const [modalMotivoAbierto, setModalMotivoAbierto] = useState(false);
   const [modalVerMotivoAbierto, setModalVerMotivoAbierto] = useState(false);
   const [modalRechazoAbierto, setModalRechazoAbierto] = useState(false);
-  const [modalPagoAbierto, setModalPagoAbierto] = useState(false); // Modal de pago
+  const [modalPagoAbierto, setModalPagoAbierto] = useState(false);
   const [motivo, setMotivo] = useState("");
   const [tituloModalMotivo, setTituloModalMotivo] = useState("");
   const [prestamoSeleccionado, setPrestamoSeleccionado] = useState(null);
-  const [cantidadPago, setCantidadPago] = useState(""); // Cantidad de pago
+  const [cantidadPago, setCantidadPago] = useState("");
   const [alerta, setAlerta] = useState({
     visible: false,
     tipo: "",
@@ -172,12 +171,11 @@ const ListaPrestamos = () => {
 
   const handleRealizarPago = (prestamo) => {
     setPrestamoSeleccionado(prestamo);
-    setModalPagoAbierto(true); // Abrir el modal de pago
+    setModalPagoAbierto(true);
   };
 
   const handleConfirmarPago = async () => {
     if (prestamoSeleccionado && cantidadPago) {
-      // Validación: solo números
       const cantidadNumero = parseFloat(cantidadPago);
       if (isNaN(cantidadNumero) || cantidadNumero <= 0) {
         setAlerta({
@@ -191,7 +189,6 @@ const ListaPrestamos = () => {
         return;
       }
 
-      // Validación: no exceder el monto restante
       const montoRestante =
         prestamoSeleccionado.saldoPagado > 0
           ? prestamoSeleccionado.monto -
@@ -214,7 +211,7 @@ const ListaPrestamos = () => {
       const pago = {
         cantidad: cantidadPago,
         fechaPago: obtenerFechaActual(),
-        montoRestante: montoRestante, // Obtenemos la fecha con el formato deseado
+        montoRestante: montoRestante,
       };
 
       const nuevoSaldoPagado =
@@ -225,11 +222,10 @@ const ListaPrestamos = () => {
       );
       if (index !== -1) {
         nuevosPrestamos[index].saldoPagado = nuevoSaldoPagado;
-        nuevosPrestamos[index].fechaUltimoPago = pago.fechaPago; // Usamos la fecha generada para el último pago
+        nuevosPrestamos[index].fechaUltimoPago = pago.fechaPago;
         setPrestamos(nuevosPrestamos);
       }
 
-      // Simular el API para el pago
       const result = await crearPagos(pago, prestamoSeleccionado.idPrestamo);
       if (result.exito && montoRestante == 0) {
         nuevosPrestamos[index].estado.nombre = "Pagado";
@@ -247,7 +243,7 @@ const ListaPrestamos = () => {
       }, 5000);
 
       setModalPagoAbierto(false);
-      setCantidadPago(""); // Limpiar el campo
+      setCantidadPago("");
       setPrestamoSeleccionado(null);
     } else {
       setAlerta({
@@ -263,7 +259,7 @@ const ListaPrestamos = () => {
 
   const handleCancelarPago = () => {
     setModalPagoAbierto(false);
-    setCantidadPago(""); // Limpiar el campo
+    setCantidadPago("");
   };
 
   const handleMotivo = (index, tipo) => {
@@ -280,22 +276,19 @@ const ListaPrestamos = () => {
   };
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{ mt: hayPrestamos ? 4 : 0, height: hayPrestamos ? "auto" : "100vh" }}
-    >
+    <Container maxWidth="xl" sx={{ height: "90vh", display: "flex" }}>
       <Box
         display="flex"
         justifyContent="center"
-        alignItems={hayPrestamos ? "flex-start" : "center"}
-        height={hayPrestamos ? "auto" : "100%"}
+        alignItems="center"
+        width="100%"
       >
         <Paper
           elevation={3}
           sx={{
-            padding: 4,
+            padding: 2,
             width: "100%",
-            maxWidth: "1200px",
+
             textAlign: "center",
           }}
         >
@@ -410,7 +403,7 @@ const ListaPrestamos = () => {
                                   color="primary"
                                   size="small"
                                   fullWidth
-                                  onClick={() => handleRealizarPago(prestamo)} // Agregado para abrir modal de pago
+                                  onClick={() => handleRealizarPago(prestamo)}
                                 >
                                   Realizar pago
                                 </Button>

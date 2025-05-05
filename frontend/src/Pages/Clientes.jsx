@@ -30,7 +30,7 @@ const ClientesRegistrados = () => {
   const [error, setError] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [clienteAEliminar, setClienteAEliminar] = useState(null); // Para guardar el cliente a eliminar
+  const [clienteAEliminar, setClienteAEliminar] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const ClientesRegistrados = () => {
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
-    setPage(0); // ✅ Restablecer la página cuando se cambie el término de búsqueda
+    setPage(0);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -65,7 +65,7 @@ const ClientesRegistrados = () => {
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // ✅ Restablecer la página al cambiar la cantidad de filas por página
+    setPage(0);
   };
 
   const handleAgregarUsuario = () => {
@@ -81,21 +81,19 @@ const ClientesRegistrados = () => {
   };
 
   const handleEliminar = (id) => {
-    setClienteAEliminar(id); // Guardamos el cliente a eliminar
-    setOpenModal(true); // Abrimos el modal de confirmación
+    setClienteAEliminar(id);
+    setOpenModal(true);
   };
 
   const confirmarEliminacion = () => {
-    // Aquí se llamaría a la función para eliminar el cliente
     console.log("Eliminando el cliente con id:", clienteAEliminar);
 
-    // Luego de la eliminación, cerramos el modal y actualizamos la lista de clientes
     setClientes(clientes.filter((cliente) => cliente.id !== clienteAEliminar));
-    setOpenModal(false); // Cerramos el modal
+    setOpenModal(false);
   };
 
   const cancelarEliminacion = () => {
-    setOpenModal(false); // Solo cerramos el modal si se cancela
+    setOpenModal(false);
   };
 
   const filteredClientes = clientes.filter((cliente) => {
@@ -168,7 +166,7 @@ const ClientesRegistrados = () => {
               </Button>
             </Box>
 
-            <TableContainer component={Paper}>
+            <TableContainer>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -195,25 +193,25 @@ const ClientesRegistrados = () => {
                       <TableCell>
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                           <Button
-                            variant="outlined"
+                            variant="contained"
                             color="primary"
                             sx={{ marginBottom: 1 }}
-                            onClick={() => handleVerPrestamos(cliente.id)} // Llama a la función de ver préstamos
+                            onClick={() => handleVerPrestamos(cliente.id)}
                           >
                             Ver préstamos
                           </Button>
                           <Button
-                            variant="outlined"
+                            variant="contained"
                             color="primary"
                             sx={{ marginBottom: 1 }}
-                            onClick={() => handleEditarUsuario(cliente.id)} // Llama a la función de editar
+                            onClick={() => handleEditarUsuario(cliente.id)}
                           >
                             Editar
                           </Button>
                           <Button
-                            variant="outlined"
+                            variant="contained"
                             color="error"
-                            onClick={() => handleEliminar(cliente.id)} // Llamamos a la función de eliminar con el id
+                            onClick={() => handleEliminar(cliente.id)}
                           >
                             Eliminar
                           </Button>

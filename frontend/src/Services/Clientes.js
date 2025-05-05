@@ -14,10 +14,10 @@ export const obtenerClientes = async () => {
 export const obtenerClientePorId = async (id) => {
   try {
     const respuesta = await axios.get(`${API_URL}/${id}`);
-    return respuesta.data; // Retorna los datos del cliente
+    return respuesta.data;
   } catch (error) {
     console.error("Error al obtener el cliente:", error.message);
-    throw error; // Lanza el error para que sea capturado por el componente o función llamadora
+    throw error;
   }
 };
 export const crearCliente = async (datosCliente) => {
@@ -33,10 +33,10 @@ export const crearCliente = async (datosCliente) => {
 export const editarCliente = async (id, datosCliente) => {
   try {
     const respuesta = await axios.put(`${API_URL}/${id}`, datosCliente);
-    return respuesta.data; // Retorna los datos actualizados del cliente
+    return respuesta.data;
   } catch (error) {
     console.error("Error al editar el cliente:", error.message);
-    throw error; // Lanza el error para que sea capturado por el componente o función llamadora
+    throw error;
   }
 };
 

@@ -12,9 +12,8 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { editarCliente, obtenerClientePorId } from "../Services/Clientes";
-import { useNavigate, useParams } from "react-router-dom"; // Importación para usar el ID de la URL
+import { useNavigate, useParams } from "react-router-dom";
 
-// Esquema de validación con yup
 const schema = yup.object().shape({
   nombre: yup.string().required("El nombre es obligatorio"),
   apellido: yup.string().required("El apellido es obligatorio"),
@@ -47,28 +46,26 @@ const schema = yup.object().shape({
 
 const EditarUsuario = () => {
   const [alerta, setAlerta] = useState({ mensaje: "", tipo: "" });
-  const [loading, setLoading] = useState(false); // Estado para manejar la carga
-  const [cliente, setCliente] = useState(null); // Estado para almacenar los datos del cliente
-  const { id } = useParams(); // Obtener el ID desde la URL
-  const navigate = useNavigate(); // Hook de navegación
+  const [loading, setLoading] = useState(false);
+  const [cliente, setCliente] = useState(null);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-    setValue, // Función para setear los valores del formulario
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
-    // Obtener los datos del cliente cuando el componente se monte
     const fetchCliente = async () => {
       try {
         const result = await obtenerClientePorId(id);
         if (result.exito) {
           setCliente(result.data);
-          // Rellenar los valores del formulario con los datos del cliente
           Object.keys(result.data).forEach((key) => {
             setValue(key, result.data[key]);
           });
@@ -87,7 +84,7 @@ const EditarUsuario = () => {
   }, [id, setValue]);
 
   const onSubmit = async (data) => {
-    setLoading(true); // Deshabilitar el botón
+    setLoading(true);
     const formattedData = {
       ...data,
       fechaNac: new Date(data.fechaNac).toISOString().split("T")[0],
@@ -109,7 +106,7 @@ const EditarUsuario = () => {
         tipo: "error",
       });
     } finally {
-      setLoading(false); // Rehabilitar el botón después de la respuesta
+      setLoading(false);
     }
   };
 
@@ -118,7 +115,7 @@ const EditarUsuario = () => {
       const timer = setTimeout(() => {
         setAlerta({ mensaje: "", tipo: "" });
         if (alerta.tipo === "success") {
-          navigate("/clientes"); // Redirige solo si fue éxito
+          navigate("/clientes");
         }
       }, 5000);
       return () => clearTimeout(timer);
@@ -126,7 +123,7 @@ const EditarUsuario = () => {
   }, [alerta, navigate]);
 
   if (!cliente) {
-    return <Typography variant="h6">Cargando...</Typography>; // Muestra un mensaje mientras se carga el cliente
+    return <Typography variant="h6">Cargando...</Typography>;
   }
 
   return (
@@ -274,10 +271,9 @@ const EditarUsuario = () => {
                 variant="contained"
                 color="success"
                 sx={{ mt: 2 }}
-                disabled={loading} // Deshabilita el botón cuando loading es true
+                disabled={loading}
               >
                 {loading ? "Guardando..." : "Guardar usuario"}{" "}
-                {/* Muestra un texto diferente mientras se está guardando */}
               </Button>
             </Grid>
           </Grid>

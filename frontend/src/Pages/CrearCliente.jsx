@@ -12,9 +12,8 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { crearCliente } from "../Services/Clientes";
-import { useNavigate } from "react-router-dom"; // ✅ Importación añadida
+import { useNavigate } from "react-router-dom";
 
-// Esquema de validación con yup
 const schema = yup.object().shape({
   nombre: yup.string().required("El nombre es obligatorio"),
   apellido: yup.string().required("El apellido es obligatorio"),
@@ -47,8 +46,8 @@ const schema = yup.object().shape({
 
 const CrearUsuario = () => {
   const [alerta, setAlerta] = useState({ mensaje: "", tipo: "" });
-  const [loading, setLoading] = useState(false); // ✅ Estado para manejar la carga
-  const navigate = useNavigate(); // ✅ Hook de navegación
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const {
     control,
@@ -68,7 +67,7 @@ const CrearUsuario = () => {
   });
 
   const onSubmit = async (data) => {
-    setLoading(true); // ✅ Deshabilitar el botón
+    setLoading(true);
     const formattedData = {
       ...data,
       fechaNac: new Date(data.fechaNac).toISOString().split("T")[0],
@@ -90,7 +89,7 @@ const CrearUsuario = () => {
         tipo: "error",
       });
     } finally {
-      setLoading(false); // ✅ Rehabilitar el botón después de la respuesta
+      setLoading(false);
     }
   };
 
@@ -99,7 +98,7 @@ const CrearUsuario = () => {
       const timer = setTimeout(() => {
         setAlerta({ mensaje: "", tipo: "" });
         if (alerta.tipo === "success") {
-          navigate("/clientes"); // ✅ Redirige solo si fue éxito
+          navigate("/clientes");
         }
       }, 5000);
       return () => clearTimeout(timer);
@@ -129,7 +128,6 @@ const CrearUsuario = () => {
 
         <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
           <Grid container spacing={3}>
-            {/* ✅ Grid no modificado */}
             <Grid size={{ xs: 12, sm: 6 }}>
               <Controller
                 name="nombre"
@@ -252,10 +250,9 @@ const CrearUsuario = () => {
                 variant="contained"
                 color="success"
                 sx={{ mt: 2 }}
-                disabled={loading} // ✅ Deshabilita el botón cuando loading es true
+                disabled={loading}
               >
                 {loading ? "Guardando..." : "Guardar usuario"}{" "}
-                {/* ✅ Muestra un texto diferente mientras se está guardando */}
               </Button>
             </Grid>
           </Grid>

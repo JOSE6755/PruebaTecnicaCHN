@@ -6,7 +6,6 @@ const NavBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Mapeamos rutas a índices para mantener la pestaña activa
   const routeToIndex = {
     "/": 0,
     "/clientes": 1,

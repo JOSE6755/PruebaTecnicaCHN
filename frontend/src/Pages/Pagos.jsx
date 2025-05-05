@@ -10,7 +10,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useParams } from "react-router-dom"; // Importamos useParams para obtener parámetros de la URL
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const obtenerPagos = async (idPrestamo) => {
@@ -18,7 +18,7 @@ const obtenerPagos = async (idPrestamo) => {
     const response = await axios.get(
       `http://localhost:8080/pagos/${idPrestamo}`
     );
-    return response.data; // Asumimos que los datos de pagos vienen en este formato
+    return response.data;
   } catch (error) {
     console.error("Error al obtener los pagos:", error);
     throw new Error("No se pudieron obtener los pagos.");
@@ -26,10 +26,10 @@ const obtenerPagos = async (idPrestamo) => {
 };
 
 const Pagos = () => {
-  const { idPrestamo } = useParams(); // Usamos useParams para obtener el idPrestamo de la URL
+  const { idPrestamo } = useParams();
   const [pagos, setPagos] = useState([]);
-  const [montoTotal, setMontoTotal] = useState(0); // Estado para el monto total inicial
-  const [montoRestante, setMontoRestante] = useState(0); // Estado para el monto restante
+  const [montoTotal, setMontoTotal] = useState(0);
+  const [montoRestante, setMontoRestante] = useState(0);
 
   useEffect(() => {
     const cargarPagos = async () => {
@@ -38,11 +38,10 @@ const Pagos = () => {
         console.log(datosPagos);
         setPagos(datosPagos.data);
 
-        // Inicializamos el monto total del préstamo, si es que existe
         if (datosPagos.data.length > 0) {
-          const total = datosPagos.data[0].montoTotal; // Suponemos que el primer pago tiene el monto total
+          const total = datosPagos.data[0].montoTotal;
           setMontoTotal(total);
-          setMontoRestante(total); // Inicializamos el monto restante
+          setMontoRestante(total);
         }
       } catch (error) {
         console.error("Error al cargar los pagos:", error);
@@ -55,12 +54,11 @@ const Pagos = () => {
   }, [idPrestamo]);
 
   useEffect(() => {
-    // Calculamos el monto restante en base a los pagos
     const calcularMontoRestante = () => {
       let totalRestante = montoTotal;
 
       pagos.forEach((pago) => {
-        totalRestante -= pago.cantidad; // Restamos la cantidad de cada pago
+        totalRestante -= pago.cantidad;
       });
 
       setMontoRestante(totalRestante);
