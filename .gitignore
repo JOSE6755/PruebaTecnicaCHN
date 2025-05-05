@@ -1,0 +1,61 @@
+# Ignorar archivos y directorios de la compilación de Spring Boot (Java)
+*.class
+*.jar
+*.war
+*.ear
+target/
+build/
+
+# Ignorar archivos generados por Maven (Spring Boot)
+.mvn/
+.idea/
+*.iml
+
+# Ignorar dependencias de Node.js (React)
+node_modules/
+
+# Ignorar los archivos de logs
+*.log
+
+# Archivos de compilación de React
+/build/
+dist/
+
+# Archivos del sistema operativo (OS)
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de configuración de IDEs
+.idea/
+*.sublime-workspace
+*.sublime-project
+.vscode/
+
+# Archivos de configuración de herramientas de construcción
+*.log
+npm-debug.log
+yarn-error.log
+
+# Ignorar configuración de JetBrains (IntelliJ, etc)
+*.iml
+*.ipr
+*.iws
+
+# Archivos de configuración de Eclipse
+.settings/
+
+# Archivos de configuración de NetBeans
+nbproject/
+
+# Archivos específicos de Docker (si existen)
+.docker/
+Dockerfile*
+docker-compose.yml
+
+# Ignorar archivos locales de base de datos (por ejemplo, si usas H2 o SQLite)
+*.h2.db
+*.sqlite
+
+# Archivos temporales de OS
+*.swp
+*.swo
